@@ -38,7 +38,7 @@ module.exports = async (httpServer) => {
         io.to(doctorSocketId).emit("new-patient-message", data);
       }
 
-      evaluateSample(data)
+      evaluateSample(data, socket.user._profileId)
     });
 
     socket.on("associate_patient", async (patientId) => {
