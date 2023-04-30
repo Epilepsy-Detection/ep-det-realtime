@@ -2,16 +2,17 @@ const { Server } = require("socket.io");
 
 const socketLog = require("./socketConsoleLog");
 const authenticate = require("../middleware/authenitcate");
-const { removeConnection } = require("../service/removeConnection");
-const { addPatientDoctorAssociation } = require("../service/addAssociation");
-const { getDoctorSocketIdByPatient } = require("../service/hasAssociation");
+const { removeConnection } = require("../service/redis/removeConnection");
+const { addPatientDoctorAssociation } = require("../service/redis/addAssociation");
+const { getDoctorSocketIdByPatient } = require("../service/redis/hasAssociation");
 const {
   getActivePatientsByDoctor,
-} = require("../service/getActivePatientsByDoctor");
+} = require("../service/redis/getActivePatientsByDoctor");
 const {
   removeDoctorAssociations,
-} = require("../service/removeDoctorAssociations");
+} = require("../service/redis/removeDoctorAssociations");
 const redisClient = require("./redisClient");
+const { evaluateSample } = require("../service/mlserver/evaluateSample");
 
 let io;
 
@@ -36,6 +37,8 @@ module.exports = async (httpServer) => {
       if (doctorSocketId) {
         io.to(doctorSocketId).emit("new-patient-message", data);
       }
+
+      evaluateSample(data)
     });
 
     socket.on("associate_patient", async (patientId) => {

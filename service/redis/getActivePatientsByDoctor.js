@@ -1,4 +1,4 @@
-const redisClient = require("../setup/redisClient");
+const redisClient = require("../../setup/redisClient");
 const Patient = require('ep-det-core/models/mongoose/patient')
 
 module.exports.getActivePatientsByDoctor = async (doctorSocketId) => {
