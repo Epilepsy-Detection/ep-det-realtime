@@ -1,17 +1,19 @@
 const axios = require('axios');
+const { publishToEmergencyQueue } = require("../rabbitmq/publishToEmergencyQueue");
 
-module.exports.evaluateSample = async (sample) => {
+module.exports.evaluateSample = async (sample, patientId) => {
   const arr = [...sample]
   axios.post('http://localhost:2000/predict', {data: arr})
-    .then(res => {
+    .then((res) => {
       const prediction = res.data.prediction;
 
       const label = prediction.label
       if (label === "A" || label === "B") {
-        // TODO: Notify Emergency Contact
-        console.log("Epileptic", label)
-      } else {
-        console.log("Non Epileptic", label)
+        const data = {
+          label: prediction.label,
+          patientId: patientId,
+        }
+        publishToEmergencyQueue(data)
       }
     })
     .catch(err => {
