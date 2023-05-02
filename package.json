@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.3",
+    "axios": "^1.4.0",
     "colors": "^1.4.0",
     "dotenv": "^16.0.3",
     "ep-det-core": "github:Epilepsy-Detection/ep-det-core",

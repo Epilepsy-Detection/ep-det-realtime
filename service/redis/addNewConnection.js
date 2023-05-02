@@ -1,4 +1,4 @@
-const redisClient = require("../setup/redisClient");
+const redisClient = require("../../setup/redisClient");
 
 module.exports.addNewConnection = async (socketId, user) => {
     const connection = {

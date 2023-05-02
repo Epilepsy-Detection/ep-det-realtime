@@ -1,6 +1,6 @@
 const AppError = require("ep-det-core/utils/AppError");
 const { verifyJWTToken } = require("ep-det-core/utils/verifyJWT");
-const { addNewConnection } = require("../service/addNewConnection");
+const { addNewConnection } = require("../service/redis/addNewConnection");
 
 module.exports = async (socket, next) => {
   try {
