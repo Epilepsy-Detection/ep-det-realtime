@@ -12,6 +12,7 @@ module.exports.evaluateSample = async (sample, patientId) => {
         const data = {
           label: prediction.label,
           patientId: patientId,
+          timestamp: new Date(),
         }
         publishToEmergencyQueue(data)
       }
